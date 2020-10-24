@@ -38,12 +38,14 @@ class PolTabelaHashEABL {
   DADOS tabela[M];
   public: 
   PolTabelaHashEABL() = default;
+  int colisoes = 0;
   void insere(string nome) {
     // Chave é o código hash inicial, resultado do polinomio.    
     unsigned int chave = PolTabelaHashEABL::hash(nome);
     // Procura a primeira posição livre
     unsigned int hash = chave % M;
     while(tabela[hash].ocupado){
+      colisoes++;
       hash++;
       if (hash >= M){
         hash = 0;
@@ -73,7 +75,15 @@ class PolTabelaHashEABL {
     }while(chave != hash);
     return tentativas;
   }
-
+  double taxaOcupacao(){
+    int ocupados = 0;
+    for(int i = 0 ; i < M; i++){
+      if(tabela[i].ocupado){
+        ocupados++;
+      }
+    }
+    return (double) ocupados/M;
+  }
 };
 
 // Classe hash que implementa hash polinomial para strings
@@ -87,7 +97,7 @@ class PolTabelaHashEADH {
   static const int N = 10000;
 
   //Número primo para a segunda função de hash
-  static const int a = 11971;
+  static const int a = 7237;
   private: 
   unsigned int hash(string nome) {
     unsigned int chave = 0;
@@ -104,13 +114,13 @@ class PolTabelaHashEADH {
   int colisoes = 0;
   void insere(string nome) {
     unsigned int chave = PolTabelaHashEADH::hash(nome);
-    unsigned int hash;
+    unsigned int hash = chave % M;
     int i = 0;
-    do{
+    while(tabela[hash].ocupado){
       //segundo hash em caso de colisão
-      hash = (chave + (i *(chave % a))) % M; 
       i++;
-    }while(tabela[hash].ocupado);
+      hash = (chave + (i *(chave % a))) % M; 
+    }
     colisoes += i;
     tabela[hash].ocupado = true;
     tabela[hash].usado = true;
