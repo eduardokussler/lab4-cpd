@@ -5,10 +5,11 @@
 using namespace std;
 
 int main() {
-  PolTabelaHashEADH* tabela1 = new PolTabelaHashEADH();
-  tabela1->insere("Eduardo Kussler");
-  printf("\n%d", tabela1->busca("Eduardo Kussler"));
-  tabela1->insere("Kussler Eduardo");
-  printf("\n%d", tabela1->busca("Kussler Eduardo"));
+  FILE* arq = fopen("nomes_10000.txt", "r");
+  PolTabelaHashEADH* tabela = new PolTabelaHashEADH();
+  string tmp = "";
+  while(!feof(arq)){
+    tmp = fgetc(arq);
+  }
   return 0;
 }

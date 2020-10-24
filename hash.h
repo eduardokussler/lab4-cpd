@@ -83,7 +83,6 @@ class PolTabelaHashEADH {
   //taxa de ocupação  
   //e 12007 é o primeiro número primo maior igual a 20000
   static const int M = 12007;
-
   //N - numero de elementos = 10000
   static const int N = 10000;
 
@@ -101,6 +100,8 @@ class PolTabelaHashEADH {
   }
   DADOS tabela[M];
   public: 
+  PolTabelaHashEADH() = default;
+  int colisoes = 0;
   void insere(string nome) {
     unsigned int chave = PolTabelaHashEADH::hash(nome);
     unsigned int hash;
@@ -110,7 +111,7 @@ class PolTabelaHashEADH {
       hash = (chave + (i *(chave % a))) % M; 
       i++;
     }while(tabela[hash].ocupado);
-
+    colisoes += i;
     tabela[hash].ocupado = true;
     tabela[hash].usado = true;
     tabela[hash].nome = nome;
@@ -137,6 +138,16 @@ class PolTabelaHashEADH {
     } while(tabela[hash].usado);
 
     return tentativas;
+  }
+
+  double taxaOcupacao(){
+    int ocupados = 0;
+    for(int i = 0 ; i < M; i++){
+      if(tabela[i].ocupado){
+        ocupados++;
+      }
+    }
+    return (double) ocupados/M;
   }
 };
 
