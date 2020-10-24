@@ -1,0 +1,23 @@
+Para esse laboratório, implementei uma função polinomial para 
+converter a string para inteiro e outra que apenas somava os valores
+ascii dos caracteres.
+Para resolução de conflitos, escolhi endereçamento aberto com linear
+probing e duplo hashing.
+A função polinomial, calcula a chave multiplicando o valor ascii do
+caractere por 37^i, onde i é a posição do caractere na string.
+A função normal, apenas soma os valores ascii, sem atribuir pesos 
+aos caracteres.
+Para a resolução de conflitos, foi utilizado linear probing, onde, caso
+houvesse algum conflito, soma-se 1 ao hash e testa se a posição está ocupada
+ou não. A outra solução foi o duplo hashing, no qual, em caso de conflito,
+soma-se a chave um valor i*(chave mod 7237) antes de tirar o mod 12007, onde i
+é o número de laços já feitos.
+Para a solução com linear probing, o tamanho da tabela foi de 20011, pois,
+assim, a taxa de ocupação para os 10000 nomes ficaria próxima de 0.5 e 
+20011 é um número primo. Já para o duplo hashing, foi escolhida uma tabela
+de tamanho 12007, por ser um número primo, e 20% maior que o tamanho da entrada.
+
+Durante a construção da tabela:
+Número de colisões durante construção da tabela: 13276
+Taxa de Ocupação: 83% 
+Mais detalhes das consultas estão no arquivo "resultados_consulta.txt"
